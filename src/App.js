@@ -1,29 +1,20 @@
 import { React } from 'react';
 import './App.scss';
-import getProducts from './components/Products';
-import updateQuantity from './components/AddToCart';
-import getBasketItems from './components/Basket';
+import Cart from './components/Cart';
+import Header from './components/Header';
+import Products from './components/Products';
 
-/* eslint-disable max-len */
-const App = (context) => {
-	const { state: { total, cartItems }} = context;
-
-	// eslint-disable-next-line no-console
-	console.log(context);
-	return <div className="App" role="application">
-		<div className="row block centre"><h1 className="heading-align">Fruit Shopping</h1></div>
+const App = (context) =>
+	<div className="App" role="application">
+		<Header/>
 		<div className="row">
 			<div className="container col-1">
-				<div className="left">{ getProducts() }</div>
-				<div className="right">{ updateQuantity() }</div>
+				<Products context={ context }/>
 			</div>
 			<div className="container col-2">
-				<h2>Cart</h2><br/>
-				<div>{ getBasketItems({ state: { cartItems }}) }</div><br/>
-				<div><h3>Total: {total}</h3></div>
+				<Cart context={ context }/>
 			</div>
 		</div>
 	</div>;
-};
 
 export default App;

@@ -1,6 +1,3 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable max-len */
-
 import Services from '../services/AddOrDeleteQuantity';
 
 const addFruit = ({ state, data }) => ({
