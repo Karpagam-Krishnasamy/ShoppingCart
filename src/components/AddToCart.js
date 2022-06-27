@@ -7,7 +7,7 @@ import context from '../core/context';
 import AddToCart from '../images/AddToCart.jpg';
 
 const updateQuantity = () =>
-	Object.keys(config.fruits).map((fruitId) =>
+	config.fruits.map((fruit) =>
 		<div>
 			<input
 				type="image"
@@ -16,8 +16,8 @@ const updateQuantity = () =>
 				width="40%"
 				height="40%"
 				onClick={ () => {
-					context.actions.addFruit(fruitId);
-					context.actions.getTotal();
+					context.actions.addFruit({ fruit });
+					context.actions.getTotal({ item: fruit, operation: 'add' });
 				} }
 			/>
 		</div>);

@@ -1,6 +1,5 @@
-
 const seed = {
-	totalValue: 0,
+	total: 0,
 	cartItems: {},
 };
 

@@ -1,50 +1,28 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable no-return-assign */
-import config from '../core/config';
-import { map, reduce } from '@laufire/utils/collection';
+import { filter } from '@laufire/utils/collection';
 
 const addFruit = ({ state, data }) =>
-	state.cartItems[data] = (state.cartItems[data] || 0) + 1;
+	({ ...state.cartItems, [data.fruit.id]:
+		(state.cartItems[data.fruit.id] || 0) + 1 });
 
 const removeFruit = ({ state, data }) =>
-	state.cartItems[data] <= 1
-		? delete state.cartItems[data]
-		: state.cartItems[data] -= 1;
+	filter({ ...state.cartItems, [data.fruit.id]:
+		state.cartItems[data.fruit.id] - 1 }, (quantity) =>
+		quantity !== 0);
 
-const getItemPrice = (quantity, fruitId) => config.rates[fruitId] * quantity;
+const getDiscountPrice = (fruit) =>
+	fruit.rate - (fruit.rate * (fruit.discount || 0));
 
-const getDiscountAmount = (quantity, fruitId) =>
-	config.discounts.hasOwnProperty(fruitId)
-		? (config.discounts[fruitId] / parseFloat(100))
-		* config.rates[fruitId] * quantity
-		: 0;
+const getItemPrice = (fruit) =>
+	getDiscountPrice(fruit) + (getDiscountPrice(fruit) * (fruit.tax || 0));
 
-const getItemDiscountedPrice = (quantity, fruitId) =>
-	getItemPrice(quantity, fruitId) - getDiscountAmount(quantity, fruitId);
-
-const getTaxAmount = (fruitId) =>
-	config.taxes.hasOwnProperty(fruitId)
-		? config.taxes[fruitId] / parseFloat(100)
-		: 0;
-
-const getFinalLineItemPrice = ({ state }) =>
-	map(state.cartItems, (quantity, fruitId) =>
-		getItemDiscountedPrice(quantity, fruitId)
-	+ (getItemDiscountedPrice(quantity, fruitId)
-		* getTaxAmount(fruitId)));
-
-const getTotalAmount = ({ state }) =>
-	reduce(
-		getFinalLineItemPrice({ state }), (sum, individualRate) =>
-			sum + individualRate, 0
-	);
+const getTotal = ({ state, data }) => (data.operation === 'add'
+	? state.total + getItemPrice(data.item)
+	: state.total - getItemPrice(data.item));
 
 const Services = {
 	addFruit,
 	removeFruit,
-	getTotalAmount,
+	getTotal,
 };
 
 export default Services;

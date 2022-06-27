@@ -3,16 +3,16 @@ import config from '../core/config';
 import { React } from 'react';
 
 const getProducts = () =>
-	Object.keys(config.fruits).map((fruitId) =>
+	config.fruits.map((fruit) =>
 		<div>
 			<img
-				src={ config.images[fruitId] }
+				src={ fruit.image }
 				alt="Fruit image"
 				width="20%"
 				height="20%"
 			/>
-			<h3>{ config.fruits[fruitId] }</h3>
-			<h3>Rs. { config.rates[fruitId] }/kg</h3>
+			<h3>{ fruit.name }</h3>
+			<h3>Rs. { fruit.rate }/kg</h3>
 		</div>);
 
 export default getProducts;

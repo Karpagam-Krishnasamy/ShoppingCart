@@ -8,30 +8,32 @@ import plusImage from '../images/plus.png';
 import minusImage from '../images/minus.jpg';
 
 const getBasketItems = ({ state }) =>
-	Object.keys(state.cartItems).map((fruitId) =>
-		<div><h3 className="cart-text-align">{config.fruits[fruitId]} &nbsp;&nbsp;    Rs. { config.rates[fruitId] }/kg</h3>
-			<a className="border right">
-				<input
-					type="image"
-					src={ plusImage }
-					width="3%"
-					height="3%"
-					onClick={ () => {
-						context.actions.addFruit(fruitId);
-						context.actions.getTotal();
-					} }
-				/>&nbsp;&nbsp;
-				<a className="quantityBorder">{state.cartItems[fruitId]}</a>&nbsp;&nbsp;
-				<input
-					type="image"
-					src={ minusImage }
-					width="4%"
-					onClick={ () => {
-						context.actions.removeFruit(fruitId);
-						context.actions.getTotal();
-					} }
-				/>
-			</a><br/><br/>
-		</div>);
+	// eslint-disable-next-line eqeqeq
+	config.fruits.filter((fruit) => Object.keys(state.cartItems).some((fruitId) => fruitId == fruit.id))
+		.map((fruit) =>
+			<div><h3 className="cart-text-align">{fruit.name} &nbsp;&nbsp;    Rs. { fruit.rate }/kg</h3>
+				<a className="border right">
+					<input
+						type="image"
+						src={ plusImage }
+						width="3%"
+						height="3%"
+						onClick={ () => {
+							context.actions.addFruit({ fruit });
+							context.actions.getTotal({ item: fruit, operation: 'add' });
+						} }
+					/>&nbsp;&nbsp;
+					<a className="quantityBorder">{state.cartItems[fruit.id]}</a>&nbsp;&nbsp;
+					<input
+						type="image"
+						src={ minusImage }
+						width="4%"
+						onClick={ () => {
+							context.actions.removeFruit({ fruit });
+							context.actions.getTotal({ item: fruit, operation: 'delete' });
+						} }
+					/>
+				</a><br/><br/>
+			</div>);
 
 export default getBasketItems;

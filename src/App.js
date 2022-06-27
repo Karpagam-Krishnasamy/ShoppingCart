@@ -5,8 +5,12 @@ import updateQuantity from './components/AddToCart';
 import getBasketItems from './components/Basket';
 
 /* eslint-disable max-len */
-const App = ({ state: { totalValue, cartItems }}) =>
-	<div className="App" role="application">
+const App = (context) => {
+	const { state: { total, cartItems }} = context;
+
+	// eslint-disable-next-line no-console
+	console.log(context);
+	return <div className="App" role="application">
 		<div className="row block centre"><h1 className="heading-align">Fruit Shopping</h1></div>
 		<div className="row">
 			<div className="container col-1">
@@ -16,9 +20,10 @@ const App = ({ state: { totalValue, cartItems }}) =>
 			<div className="container col-2">
 				<h2>Cart</h2><br/>
 				<div>{ getBasketItems({ state: { cartItems }}) }</div><br/>
-				<div><h3>Total: {totalValue}</h3></div>
+				<div><h3>Total: {total}</h3></div>
 			</div>
 		</div>
 	</div>;
+};
 
 export default App;

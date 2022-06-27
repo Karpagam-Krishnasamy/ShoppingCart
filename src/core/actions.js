@@ -3,11 +3,14 @@
 
 import Services from '../services/AddOrDeleteQuantity';
 
-const addFruit = ({ state, data }) => Services.addFruit({ state, data });
-const removeFruit = ({ state, data }) => Services.removeFruit({ state, data });
-
-const getTotal = ({ state }) => ({
-	totalValue: Services.getTotalAmount({ state }),
+const addFruit = ({ state, data }) => ({
+	cartItems: Services.addFruit({ state, data }),
+});
+const removeFruit = ({ state, data }) => ({
+	cartItems: Services.removeFruit({ state, data }),
+});
+const getTotal = ({ state, data }) => ({
+	total: Services.getTotal({ state, data }),
 });
 
 const actions = {
