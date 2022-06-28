@@ -10,21 +10,8 @@ const UpdateQuantity = {
 		filter({ ...cartItems, [id]: cartItems[id] - 1 }, (quantity) =>
 			quantity !== 0),
 
-	add: (total, fruit) =>
-		total + UpdateQuantity.getItemPrice(fruit),
-
-	delete: (total, fruit) =>
-		total - UpdateQuantity.getItemPrice(fruit),
-
-	getTotal: ({ state: { total }, data: { fruit, operation }}) =>
-		UpdateQuantity[operation](total, fruit),
-
-	getDiscount: (fruit) =>
-		fruit.rate - (fruit.rate * (fruit.discount || 0)),
-
-	getItemPrice: (fruit) =>
-		UpdateQuantity.getDiscount(fruit)
-	+	(UpdateQuantity.getDiscount(fruit) * (fruit.tax || 0)),
+	getItemDetails: ({ config: { fruits }, data }) =>
+		fruits.find((fruit) => fruit.id === Number(data)),
 };
 
 export default UpdateQuantity;

@@ -1,13 +1,14 @@
 import UpdateQuantity from '../services/UpdateQuantity';
+import calculateTotal from '../services/calculateTotal';
 
-const addFruit = ({ state, data }) => ({
-	cartItems: UpdateQuantity.addFruit({ state, data }),
+const addFruit = (context) => ({
+	cartItems: UpdateQuantity.addFruit(context),
 });
-const removeFruit = ({ state, data }) => ({
-	cartItems: UpdateQuantity.removeFruit({ state, data }),
+const removeFruit = (context) => ({
+	cartItems: UpdateQuantity.removeFruit(context),
 });
-const getTotal = ({ state, data }) => ({
-	total: UpdateQuantity.getTotal({ state, data }),
+const getTotal = (context) => ({
+	total: calculateTotal.getTotal(context),
 });
 
 const actions = {

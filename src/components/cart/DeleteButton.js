@@ -1,7 +1,7 @@
 import { React } from 'react';
 import minusImage from '../../images/minus.jpg';
 
-const DeleteButton = ({ item, actions }) =>
+const DeleteButton = ({ actions, item }) =>
 	<input
 		type="image"
 		src={ minusImage }
@@ -9,8 +9,7 @@ const DeleteButton = ({ item, actions }) =>
 		height="3%"
 		onClick={ () => {
 			actions.removeFruit({ item });
-			actions.getTotal({ fruit: item,
-				operation: 'delete' });
+			actions.getTotal({ fruit: item, operation: 'delete' });
 		} }
 	/>;
 
