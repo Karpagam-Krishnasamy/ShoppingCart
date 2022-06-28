@@ -2,7 +2,7 @@ import { React } from 'react';
 import AddButton from './AddToCartButton';
 
 const Products = ({ context }) => {
-	const { config: { fruits }, actions } = context;
+	const { config: { fruits }} = context;
 
 	return fruits.map((fruit) => <products key={ fruit.id }>
 		<div className="left">
@@ -10,7 +10,7 @@ const Products = ({ context }) => {
 			<h3>{ fruit.name }</h3> <h3>Rs. { fruit.rate }/kg</h3>
 		</div>
 		<div className="right">
-			<AddButton fruit={ fruit } actions={ actions }/>
+			<AddButton { ...{ ...context, item: fruit } }/>
 		</div></products>);
 };
 

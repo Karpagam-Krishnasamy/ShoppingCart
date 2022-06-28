@@ -11,7 +11,7 @@ const Basket = ({ context }) => {
 			<div key={ fruit.id }>
 				<h3 className="cart-text-align">{fruit.name} &nbsp;&nbsp;
 					Rs. { fruit.rate }/kg</h3>
-				<Quantity context={ context } fruit={ fruit }/>
+				<Quantity { ...{ ...context, item: fruit } }/>
 			</div>);
 };
 

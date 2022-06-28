@@ -1,30 +1,30 @@
 import { filter } from '@laufire/utils/collection';
 
-const addFruit = ({ state: { cartItems }, data: { fruit: { id }}}) => ({
-	...cartItems,
-	[id]: (cartItems[id] || 0) + 1,
-});
+const UpdateQuantity = {
+	addFruit: ({ state: { cartItems }, data: { item: { id }}}) => ({
+		...cartItems,
+		[id]: (cartItems[id] || 0) + 1,
+	}),
 
-const removeFruit = ({ state: { cartItems }, data: { fruit: { id }}}) =>
-	filter({ ...cartItems, [id]: cartItems[id] - 1 }, (quantity) =>
-		quantity !== 0);
+	removeFruit: ({ state: { cartItems }, data: { item: { id }}}) =>
+		filter({ ...cartItems, [id]: cartItems[id] - 1 }, (quantity) =>
+			quantity !== 0),
 
-const getDiscount = (fruit) =>
-	fruit.rate - (fruit.rate * (fruit.discount || 0));
+	add: (total, fruit) =>
+		total + UpdateQuantity.getItemPrice(fruit),
 
-const getItemPrice = (fruit) =>
-	getDiscount(fruit)
-	+	(getDiscount(fruit) * (fruit.tax || 0));
+	delete: (total, fruit) =>
+		total - UpdateQuantity.getItemPrice(fruit),
 
-const getTotal = ({ state: { total }, data: { item, operation }}) =>
-	(operation === 'add'
-		? total + getItemPrice(item)
-		: total - getItemPrice(item));
+	getTotal: ({ state: { total }, data: { fruit, operation }}) =>
+		UpdateQuantity[operation](total, fruit),
 
-const Services = {
-	addFruit,
-	removeFruit,
-	getTotal,
+	getDiscount: (fruit) =>
+		fruit.rate - (fruit.rate * (fruit.discount || 0)),
+
+	getItemPrice: (fruit) =>
+		UpdateQuantity.getDiscount(fruit)
+	+	(UpdateQuantity.getDiscount(fruit) * (fruit.tax || 0)),
 };
 
-export default Services;
+export default UpdateQuantity;

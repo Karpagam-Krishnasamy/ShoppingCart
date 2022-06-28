@@ -1,7 +1,7 @@
 import { React } from 'react';
 import AddToCart from '../images/AddToCart.jpg';
 
-const AddButton = ({ fruit, actions }) =>
+const AddButton = ({ item, actions }) =>
 	<div>
 		<input
 			type="image"
@@ -10,8 +10,8 @@ const AddButton = ({ fruit, actions }) =>
 			width="35%"
 			height="15%"
 			onClick={ () => {
-				actions.addFruit({ fruit });
-				actions.getTotal({ item: fruit, operation: 'add' });
+				actions.addFruit({ item });
+				actions.getTotal({ fruit: item, operation: 'add' });
 			} }
 		/>
 	</div>;
