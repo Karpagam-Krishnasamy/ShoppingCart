@@ -1,4 +1,4 @@
-import Services from '../services/AddOrDeleteQuantity';
+import Services from '../services/UpdateQuantity';
 
 const addFruit = ({ state, data }) => ({
 	cartItems: Services.addFruit({ state, data }),

@@ -1,6 +1,6 @@
 import { React } from 'react';
 import './App.scss';
-import Cart from './components/Cart';
+import Cart from './components/cart/Cart';
 import Header from './components/Header';
 import Products from './components/Products';
 
